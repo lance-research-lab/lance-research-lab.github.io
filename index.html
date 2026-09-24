@@ -27,6 +27,18 @@
   .lance-area:hover { transform: translateY(-4px); border-color: rgba(241,90,34,0.55); box-shadow: 0 26px 60px -34px rgba(0,0,0,0.8); }
   .lance-pub:hover { border-color: rgba(241,90,34,0.5) !important; }
   .lance-person:hover .lance-photo { filter: grayscale(0); }
+   @media (max-width: 700px) {
+    nav { padding: 12px 20px !important; }
+    .lance-nav-links { gap: 16px !important; }
+    .lance-nav-links .lance-nav-link { display: none; }
+    section, footer { padding-left: 20px !important; padding-right: 20px !important; }
+    h1 { font-size: 40px !important; }
+    h2 { font-size: 32px !important; }
+    .lance-hero-inner { padding: 64px 20px 200px !important; }
+    .lance-pi { grid-template-columns: 1fr !important; gap: 28px !important; }
+    .lance-pub { grid-template-columns: 1fr !important; gap: 12px !important; padding: 22px !important; }
+    .lance-pub > div:first-child { text-align: left !important; }
+  }
 </style>
 </helmet>
 
@@ -42,7 +54,7 @@
       <sc-if value="{{ logo }}" hint-placeholder-val="{{ false }}"><img src="{{ logo }}" alt="LANCE" style="height: 55px; width: auto; display: block;"></sc-if>
       <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ true }}"><div style="font-family: 'Spectral', serif; font-weight: 800; font-size: 24px; color: #fff; letter-spacing: 0.01em;">LANCE<sup style="color:#F15A22;font-size:0.5em;top:-0.7em;">&#8599;</sup></div></sc-if>
     </a>
-    <div style="display: flex; align-items: center; gap: 32px;">
+    <div class="lance-nav-links" style="display: flex; align-items: center; gap: 32px;">
       <a class="lance-nav-link" href="#research" style="font-size: 14px; color: #c3cee0;">Research</a>
       <a class="lance-nav-link" href="#people" style="font-size: 14px; color: #c3cee0;">People</a>
       <a class="lance-nav-link" href="#publications" style="font-size: 14px; color: #c3cee0;">Publications</a>
@@ -55,7 +67,7 @@
     <canvas ref="{{ heroCanvas }}" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></canvas>
     <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,23,48,0.92) 0%, rgba(8,23,48,0.5) 52%, rgba(8,23,48,0.08) 100%);"></div>
 
-    <div style="position: relative; padding: 96px 44px 0; max-width: 1280px; margin: 0 auto;">
+    <div class="lance-hero-inner" style="position: relative; padding: 96px 44px 0; max-width: 1280px; margin: 0 auto;">
       <div style="max-width: 780px;">
         <h1 style="font-family: 'Spectral', serif; font-weight: 800; font-size: 64px; line-height: 1.04; letter-spacing: -0.02em; color: #fff; margin: 0 0 26px;">Brain-inspired computing, built to <span style="font-style: italic; color: #f6a072;">leave the laboratory</span>.</h1>
         <p style="font-size: 19px; line-height: 1.62; color: #c3cee0; margin: 0 0 38px; max-width: 600px;">A research lab in AI, machine learning, and neuromorphic computing. We work to close the gap between theory and practical deployment, so that what we build is not just powerful, but efficient, accountable, and ready for high&#8209;stakes use.</p>
@@ -101,8 +113,8 @@
         <p style="font-size: 17.5px; line-height: 1.64; color: #aebcd2; margin: 0;">Concretely, the work aims at reduced computational costs, systems that users can trust, and AI decision-making that is transparent and interpretable. Below is where that effort sits today.</p>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;">
-        <sc-for list="{{ areas }}" as="area" hint-placeholder-count="3">
+     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px;">
+      <sc-for list="{{ areas }}" as="area" hint-placeholder-count="3">
           <div class="lance-area" style="position: relative; background: linear-gradient(160deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%); border: 1px solid rgba(255,255,255,0.1); border-radius: 18px; padding: 30px; overflow: hidden;">
             <div style="position: relative;">
               <div style="display: inline-flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #f6a072; margin-bottom: 16px;">
@@ -132,7 +144,7 @@
       </div>
 
       <!-- PI -->
-      <div style="display: grid; grid-template-columns: 260px 1fr; gap: 44px; align-items: start; padding-bottom: 56px; margin-bottom: 56px; border-bottom: 1px solid #e8eaee;">
+      <div class="lance-pi" style="display: grid; grid-template-columns: 260px 1fr; gap: 44px; align-items: start; padding-bottom: 56px; margin-bottom: 56px; border-bottom: 1px solid #e8eaee;">
         <div>
           <div class="lance-photo" style="width: 260px; height: 300px; border-radius: 16px; background: linear-gradient(160deg, #16315a, #0c2340); display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 24px 50px -30px rgba(12,35,64,0.6); filter: grayscale(0.25); transition: filter .4s ease;">
             <sc-if value="{{ piPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ piPhoto }}" alt="William Severa" style="width: 100%; height: 100%; object-fit: cover; display: block;"></sc-if>
@@ -160,7 +172,7 @@
 
       <!-- Grad students -->
       <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a93a0; margin-bottom: 24px;">Graduate Researchers</div>
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px;">
         <sc-for list="{{ members }}" as="m" hint-placeholder-count="3">
           <div class="lance-person" style="background: #f6f7f9; border: 1px solid #e8eaee; border-radius: 16px; padding: 22px;">
             <div class="lance-photo" style="width: 100%; aspect-ratio: 1 / 1; border-radius: 12px; background: linear-gradient(160deg, #2a3a52, #16223a); display: flex; align-items: center; justify-content: center; overflow: hidden; filter: grayscale(0.3); transition: filter .4s ease; margin-bottom: 18px;">
