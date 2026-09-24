@@ -1,0 +1,596 @@
+\documentclass[10pt]{article}
+\usepackage[usenames]{color} %used for font color
+\usepackage{amssymb} %maths
+\usepackage{amsmath} %maths
+\usepackage[utf8]{inputenc} %useful to type directly diacritic characters
+\begin{document}
+\begin{align*}<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LANCE &mdash; Laboratory for Advanced Neural Computing Ecosystems</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #081730; -webkit-font-smoothing: antialiased; }
+  ::selection { background: #F15A22; color: #fff; }
+  a { text-decoration: none; color: inherit; }
+  .lance-nav-link { position: relative; }
+  .lance-nav-link::after { content: ""; position: absolute; left: 0; bottom: -5px; width: 0; height: 2px; background: #F15A22; transition: width .25s ease; }
+  .lance-nav-link:hover::after { width: 100%; }
+  .lance-cta { transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+  .lance-cta:hover { transform: translateY(-2px); }
+  .lance-area { transition: transform .3s cubic-bezier(.2,.7,.3,1), border-color .3s ease, box-shadow .3s ease; }
+  .lance-area:hover { transform: translateY(-4px); border-color: rgba(241,90,34,0.55); box-shadow: 0 26px 60px -34px rgba(0,0,0,0.8); }
+  .lance-pub:hover { border-color: rgba(241,90,34,0.5) !important; }
+  .lance-person:hover .lance-photo { filter: grayscale(0); }
+</style>
+</helmet>
+
+<template id="__bundler_thumbnail">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#0C2340"/><circle cx="34" cy="42" r="3" fill="#F15A22"/><circle cx="56" cy="32" r="3" fill="#fff"/><circle cx="62" cy="58" r="3" fill="#F15A22"/><circle cx="40" cy="64" r="3" fill="#fff"/><g stroke="#9fb4d8" stroke-width="1.2" opacity="0.8"><line x1="34" y1="42" x2="56" y2="32"/><line x1="56" y1="32" x2="62" y2="58"/><line x1="62" y1="58" x2="40" y2="64"/><line x1="40" y1="64" x2="34" y2="42"/></g><text x="50" y="84" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#fff" text-anchor="middle">LANCE</text></svg>
+</template>
+
+<div style="font-family: 'IBM Plex Sans', sans-serif; background: #081730; overflow-x: hidden;">
+
+  <!-- ============ NAV ============ -->
+  <nav style="position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 16px 44px; background: rgba(8,23,48,0.82); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,0.08);">
+    <a href="#top" style="display: flex; flex-direction: column; line-height: 1;">
+      <sc-if value="{{ logo }}" hint-placeholder-val="{{ false }}"><img src="{{ logo }}" alt="LANCE" style="height: 55px; width: auto; display: block;"></sc-if>
+      <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ true }}"><div style="font-family: 'Spectral', serif; font-weight: 800; font-size: 24px; color: #fff; letter-spacing: 0.01em;">LANCE<sup style="color:#F15A22;font-size:0.5em;top:-0.7em;">&#8599;</sup></div></sc-if>
+    </a>
+    <div style="display: flex; align-items: center; gap: 32px;">
+      <a class="lance-nav-link" href="#research" style="font-size: 14px; color: #c3cee0;">Research</a>
+      <a class="lance-nav-link" href="#people" style="font-size: 14px; color: #c3cee0;">People</a>
+      <a class="lance-nav-link" href="#publications" style="font-size: 14px; color: #c3cee0;">Publications</a>
+      <a class="lance-cta" href="#contact" style="font-size: 13.5px; color: #fff; border: 1px solid rgba(255,255,255,0.28); padding: 9px 18px; border-radius: 999px;">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header id="top" style="position: relative; min-height: 760px; background: radial-gradient(120% 130% at 80% -10%, #16315a 0%, #0c2340 45%, #081730 100%); overflow: hidden;">
+    <canvas ref="{{ heroCanvas }}" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></canvas>
+    <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,23,48,0.92) 0%, rgba(8,23,48,0.5) 52%, rgba(8,23,48,0.08) 100%);"></div>
+
+    <div style="position: relative; padding: 96px 44px 0; max-width: 1280px; margin: 0 auto;">
+      <div style="max-width: 780px;">
+        <h1 style="font-family: 'Spectral', serif; font-weight: 800; font-size: 64px; line-height: 1.04; letter-spacing: -0.02em; color: #fff; margin: 0 0 26px;">Brain-inspired computing, built to <span style="font-style: italic; color: #f6a072;">leave the laboratory</span>.</h1>
+        <p style="font-size: 19px; line-height: 1.62; color: #c3cee0; margin: 0 0 38px; max-width: 600px;">A research lab in AI, machine learning, and neuromorphic computing. We work to close the gap between theory and practical deployment, so that what we build is not just powerful, but efficient, accountable, and ready for high&#8209;stakes use.</p>
+        <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+          <a class="lance-cta" href="#research" style="display: inline-flex; align-items: center; gap: 9px; background: #F15A22; color: #fff; font-weight: 600; font-size: 15px; padding: 15px 26px; border-radius: 10px; box-shadow: 0 14px 30px -12px rgba(241,90,34,0.7); white-space: nowrap;">See what we work on</a>
+          <a class="lance-cta" href="#people" style="display: inline-flex; align-items: center; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-weight: 500; font-size: 15px; padding: 15px 26px; border-radius: 10px; white-space: nowrap;">Who&rsquo;s in the lab</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 18px 44px; border-top: 1px solid rgba(255,255,255,0.1); background: rgba(8,23,48,0.55); backdrop-filter: blur(6px);">
+      <div style="max-width: 1280px; margin: 0 auto; display: flex; align-items: center; gap: 22px; flex-wrap: wrap;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #6f86ab;">Focus areas</span>
+        <span style="font-size: 13.5px; color: #d6deec;">Neuromorphic Computing</span>
+        <span style="color:#33507e;">&bull;</span>
+        <span style="font-size: 13.5px; color: #d6deec;">Spiking Neural Networks</span>
+        <span style="color:#33507e;">&bull;</span>
+        <span style="font-size: 13.5px; color: #d6deec;">Trustworthy AI</span>
+        <span style="color:#33507e;">&bull;</span>
+        <span style="font-size: 13.5px; color: #d6deec;">Efficient ML</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ MISSION ============ -->
+  <section style="background: #f6f7f9; padding: 96px 44px;">
+    <div style="max-width: 1280px; margin: 0 auto;">
+      <div style="max-width: 860px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #F15A22; margin-bottom: 20px;">The lab</div>
+        <h2 style="font-family: 'Spectral', serif; font-weight: 800; font-size: 38px; line-height: 1.14; letter-spacing: -0.015em; color: #14171c; margin: 0 0 22px;">From theory to deployment.</h2>
+        <p style="font-size: 17px; line-height: 1.68; color: #4b5563; margin: 0;">Drawing inspiration from neuroscience concepts, LANCE cultivates a connected ecosystem of research, from algorithm development and theoretical analysis through software, neuroscience modeling, and applications, to move these technologies beyond the laboratory.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESEARCH FOCUS AREAS ============ -->
+  <section id="research" style="position: relative; background: #081a33; padding: 100px 44px; scroll-margin-top: 90px;">
+    <div style="position: absolute; inset: 0; background: radial-gradient(80% 60% at 12% 0%, rgba(241,90,34,0.1) 0%, rgba(8,26,51,0) 60%);"></div>
+    <div style="position: relative; max-width: 1280px; margin: 0 auto;">
+      <div style="max-width: 720px; margin-bottom: 60px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #F15A22; margin-bottom: 20px;">Research</div>
+        <h2 style="font-family: 'Spectral', serif; font-weight: 800; font-size: 42px; line-height: 1.1; letter-spacing: -0.02em; color: #fff; margin: 0 0 18px;">What we work on.</h2>
+        <p style="font-size: 17.5px; line-height: 1.64; color: #aebcd2; margin: 0;">Concretely, the work aims at reduced computational costs, systems that users can trust, and AI decision-making that is transparent and interpretable. Below is where that effort sits today.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;">
+        <sc-for list="{{ areas }}" as="area" hint-placeholder-count="3">
+          <div class="lance-area" style="position: relative; background: linear-gradient(160deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%); border: 1px solid rgba(255,255,255,0.1); border-radius: 18px; padding: 30px; overflow: hidden;">
+            <div style="position: relative;">
+              <div style="display: inline-flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #f6a072; margin-bottom: 16px;">
+                <span style="width: 22px; height: 1px; background: #F15A22;"></span>{{ area.kicker }}
+              </div>
+              <h3 style="font-family: 'Spectral', serif; font-weight: 700; font-size: 21px; line-height: 1.2; color: #fff; margin: 0 0 14px; max-width: 92%;">{{ area.title }}</h3>
+              <p style="font-size: 14.5px; line-height: 1.58; color: #aebcd2; margin: 0 0 12px;">{{ area.body1 }}</p>
+              <p style="font-size: 14.5px; line-height: 1.58; color: #aebcd2; margin: 0 0 20px;">{{ area.body2 }}</p>
+              <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <sc-for list="{{ area.tags }}" as="tag" hint-placeholder-count="4">
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #c3cee0; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 7px; padding: 6px 11px;">{{ tag }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PEOPLE ============ -->
+  <section id="people" style="background: #fff; padding: 100px 44px; scroll-margin-top: 90px;">
+    <div style="max-width: 1280px; margin: 0 auto;">
+      <div style="max-width: 680px; margin-bottom: 56px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #F15A22; margin-bottom: 20px;">People</div>
+        <h2 style="font-family: 'Spectral', serif; font-weight: 800; font-size: 42px; line-height: 1.1; letter-spacing: -0.02em; color: #14171c; margin: 0;">Who&rsquo;s in the lab.</h2>
+      </div>
+
+      <!-- PI -->
+      <div style="display: grid; grid-template-columns: 260px 1fr; gap: 44px; align-items: start; padding-bottom: 56px; margin-bottom: 56px; border-bottom: 1px solid #e8eaee;">
+        <div>
+          <div class="lance-photo" style="width: 260px; height: 300px; border-radius: 16px; background: linear-gradient(160deg, #16315a, #0c2340); display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 24px 50px -30px rgba(12,35,64,0.6); filter: grayscale(0.25); transition: filter .4s ease;">
+            <sc-if value="{{ piPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ piPhoto }}" alt="William Severa" style="width: 100%; height: 100%; object-fit: cover; display: block;"></sc-if>
+            <sc-if value="{{ noPiPhoto }}" hint-placeholder-val="{{ true }}"><svg width="92" height="92" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.32)" stroke-width="1.3"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></sc-if>
+          </div>
+          <sc-if value="{{ noPiPhoto }}" hint-placeholder-val="{{ true }}"><div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #aab0bb; margin-top: 12px; text-align: center;">Photo coming soon</div></sc-if>
+        </div>
+        <div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #F15A22; margin-bottom: 12px;">Principal Investigator</div>
+          <h3 style="font-family: 'Spectral', serif; font-weight: 700; font-size: 32px; color: #14171c; margin: 0 0 6px;">William Severa, PhD</h3>
+          <div style="font-size: 16px; color: #6b7280; margin-bottom: 22px;">Associate Professor &middot; Computer Science, College of AI, Cyber and Computing, UT San Antonio</div>
+          <p style="font-size: 16.5px; line-height: 1.66; color: #4b5563; margin: 0 0 18px; max-width: 720px;">Dr. Severa works on the algorithms behind machine learning systems: how to train them, what they can provably compute, and what it takes to run them on real hardware. Some of that is spiking networks and neuromorphic computing; much of it is conventional deep learning under the same constraints. He came to the field from pure mathematics, with a PhD from the University of Florida, and spent the following decade at Sandia National Laboratories. His current work spans remote sensing, scientific computing, and neural systems, with medical applications being an area of growing interest.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 22px; margin-top: 22px;">
+            <a href="{{ mailto }}" class="lance-nav-link" style="display: inline-flex; align-items: center; gap: 9px; font-size: 15px; color: #0c2340; font-weight: 500;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#F15A22" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+              {{ contactEmail }}
+            </a>
+            <span style="display: inline-flex; align-items: center; gap: 9px; font-size: 15px; color: #4b5563;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#F15A22" stroke-width="1.8"><path d="M12 21s-7-5.3-7-11a7 7 0 0 1 14 0c0 5.7-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              {{ office }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grad students -->
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a93a0; margin-bottom: 24px;">Graduate Researchers</div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+        <sc-for list="{{ members }}" as="m" hint-placeholder-count="3">
+          <div class="lance-person" style="background: #f6f7f9; border: 1px solid #e8eaee; border-radius: 16px; padding: 22px;">
+            <div class="lance-photo" style="width: 100%; aspect-ratio: 1 / 1; border-radius: 12px; background: linear-gradient(160deg, #2a3a52, #16223a); display: flex; align-items: center; justify-content: center; overflow: hidden; filter: grayscale(0.3); transition: filter .4s ease; margin-bottom: 18px;">
+              <sc-if value="{{ m.photo }}" hint-placeholder-val="{{ false }}"><img src="{{ m.photo }}" alt="{{ m.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block;"></sc-if>
+              <sc-if value="{{ m.noPhoto }}" hint-placeholder-val="{{ true }}"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.3"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></sc-if>
+            </div>
+            <h4 style="font-family: 'Spectral', serif; font-weight: 600; font-size: 19px; color: #14171c; margin: 0 0 4px;">{{ m.name }}</h4>
+            <div style="font-size: 13.5px; color: #6b7280; margin-bottom: 12px;">{{ m.role }}</div>
+            <div style="font-size: 13.5px; line-height: 1.55; color: #9aa1ac; font-style: italic;">{{ m.note }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- Join callout -->
+      <sc-if value="{{ recruiting }}" hint-placeholder-val="{{ true }}">
+        <div style="margin-top: 40px; background: linear-gradient(135deg, #0c2340, #102b50); border-radius: 18px; padding: 40px 44px; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap;">
+          <div style="max-width: 640px;">
+            <h3 style="font-family: 'Spectral', serif; font-weight: 700; font-size: 26px; color: #fff; margin: 0 0 10px;">The lab is new and growing.</h3>
+            <p style="font-size: 16px; line-height: 1.6; color: #aebcd2; margin: 0;">LANCE is recruiting graduate and undergraduate researchers. Useful backgrounds include machine learning, applied mathematics, computational neuroscience, and embedded systems, though wanting to work across them matters more than arriving with all of them. Send a note about what you have been working on.</p>
+          </div>
+          <a class="lance-cta" href="{{ mailto }}" style="display: inline-flex; align-items: center; gap: 9px; background: #F15A22; color: #fff; font-weight: 600; font-size: 15px; padding: 15px 26px; border-radius: 10px; white-space: nowrap; box-shadow: 0 14px 30px -12px rgba(241,90,34,0.6);">Get in touch <span style="font-family:'IBM Plex Mono',monospace;">&#8599;</span></a>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <!-- ============ PUBLICATIONS ============ -->
+  <section id="publications" style="background: #f6f7f9; padding: 100px 44px; scroll-margin-top: 90px;">
+    <div style="max-width: 1280px; margin: 0 auto;">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 48px;">
+        <div style="max-width: 680px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #F15A22; margin-bottom: 20px;">Publications</div>
+          <h2 style="font-family: 'Spectral', serif; font-weight: 800; font-size: 42px; line-height: 1.1; letter-spacing: -0.02em; color: #14171c; margin: 0;">Selected work.</h2>
+        </div>
+        <div style="font-size: 14px; color: #8a93a0; font-style: italic;">A full publication list with links is on the way.</div>
+      </div>
+
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a93a0; margin-bottom: 22px;">Recent publications</div>
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <sc-for list="{{ pubs }}" as="p" hint-placeholder-count="2">
+          <div class="lance-pub" style="background: #fff; border: 1px solid #e6e8ec; border-radius: 14px; padding: 30px 32px; display: grid; grid-template-columns: 86px 1fr; gap: 28px; align-items: start; transition: border-color .25s ease;">
+            <div style="text-align: center;">
+              <div style="font-family: 'Spectral', serif; font-weight: 700; font-size: 30px; color: #0c2340; line-height: 1;">{{ p.year }}</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #aab0bb; margin-top: 8px;">{{ p.type }}</div>
+            </div>
+            <div>
+              <h3 style="font-family: 'Spectral', serif; font-weight: 600; font-size: 21px; line-height: 1.32; color: #14171c; margin: 0 0 10px;">{{ p.title }}</h3>
+              <div style="font-size: 14.5px; color: #5b6470; margin-bottom: 7px;">{{ p.authors }}</div>
+              <div style="font-size: 13.5px; color: #8a93a0; margin-bottom: 16px;">{{ p.venue }}</div>
+              <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <sc-for list="{{ p.tags }}" as="t" hint-placeholder-count="3">
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #5b6470; background: #eef1f5; border-radius: 6px; padding: 5px 10px;">{{ t }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- posters -->
+      <div style="margin-top: 56px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a93a0; margin-bottom: 22px;">Posters &amp; Presentations</div>
+        <sc-if value="{{ hasPosters }}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <sc-for list="{{ posters }}" as="po" hint-placeholder-count="3">
+              <div class="lance-pub" style="background: #fff; border: 1px solid #e6e8ec; border-radius: 14px; padding: 30px 32px; display: grid; grid-template-columns: 86px 1fr; gap: 28px; align-items: start; transition: border-color .25s ease;">
+                <div style="text-align: center;">
+                  <div style="font-family: 'Spectral', serif; font-weight: 700; font-size: 30px; color: #0c2340; line-height: 1;">{{ po.year }}</div>
+                  <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #aab0bb; margin-top: 8px;">{{ po.type }}</div>
+                </div>
+                <div>
+                  <h3 style="font-family: 'Spectral', serif; font-weight: 600; font-size: 21px; line-height: 1.32; color: #14171c; margin: 0 0 10px;">{{ po.title }}</h3>
+                  <div style="font-size: 14.5px; color: #5b6470; margin-bottom: 7px;">{{ po.authors }}</div>
+                  <div style="font-size: 13.5px; color: #8a93a0; margin-bottom: 16px;">{{ po.venue }}</div>
+                  <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    <sc-for list="{{ po.tags }}" as="t" hint-placeholder-count="2">
+                      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #5b6470; background: #eef1f5; border-radius: 6px; padding: 5px 10px;">{{ t }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ noPosters }}" hint-placeholder-val="{{ false }}">
+          <div style="border: 1px dashed #cdd3db; border-radius: 14px; padding: 28px 32px; background: #fcfcfd; display: flex; align-items: center; gap: 18px;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#b9c0ca" stroke-width="1.6"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8"/></svg>
+            <div style="font-size: 15px; color: #5b6470; line-height: 1.6;">Conference posters and invited talks will be listed here.</div>
+          </div>
+        </sc-if>
+      </div>
+
+      <!-- earlier work -->
+      <div style="margin-top: 56px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a93a0; margin-bottom: 6px;">Selected earlier work</div>
+        <sc-if value="{{ hasPrior }}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <sc-for list="{{ prior }}" as="pr" hint-placeholder-count="3">
+              <div class="lance-pub" style="background: #fff; border: 1px solid #e6e8ec; border-radius: 14px; padding: 30px 32px; display: grid; grid-template-columns: 86px 1fr; gap: 28px; align-items: start; transition: border-color .25s ease;">
+                <div style="text-align: center;">
+                  <div style="font-family: 'Spectral', serif; font-weight: 700; font-size: 30px; color: #0c2340; line-height: 1;">{{ pr.year }}</div>
+                  <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #aab0bb; margin-top: 8px;">{{ pr.type }}</div>
+                </div>
+                <div>
+                  <h3 style="font-family: 'Spectral', serif; font-weight: 600; font-size: 21px; line-height: 1.32; color: #14171c; margin: 0 0 10px;">{{ pr.title }}</h3>
+                  <div style="font-size: 14.5px; color: #5b6470; margin-bottom: 7px;">{{ pr.authors }}</div>
+                  <div style="font-size: 13.5px; color: #8a93a0; margin-bottom: 16px;">{{ pr.venue }}</div>
+                  <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    <sc-for list="{{ pr.tags }}" as="t" hint-placeholder-count="3">
+                      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #5b6470; background: #eef1f5; border-radius: 6px; padding: 5px 10px;">{{ t }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / CONTACT ============ -->
+  <footer id="contact" style="background: rgba(8,23,48,0.82); padding: 80px 44px 44px; scroll-margin-top: 90px; border-top: 1px solid rgba(255,255,255,0.07);">
+    <div style="max-width: 1280px; margin: 0 auto;">
+      <div style="display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 48px; padding-bottom: 52px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+        <div>
+          <sc-if value="{{ logo }}" hint-placeholder-val="{{ false }}"><img src="{{ logo }}" alt="LANCE" style="height: 55px; width: auto; display: block; margin-bottom: 12px;"></sc-if>
+          <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ true }}"><div style="font-family: 'Spectral', serif; font-weight: 800; font-size: 28px; color: #fff; margin-bottom: 6px;">LANCE<sup style="color:#F15A22;font-size:0.5em;top:-0.7em;">&#8599;</sup></div></sc-if>
+          <p style="font-size: 14.5px; line-height: 1.6; color: #6f86ab; margin: 0; max-width: 380px;">A research lab at The University of Texas at San Antonio working on neuromorphic computing, efficient machine learning, and AI that can be held accountable.</p>
+        </div>
+        <div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #6f86ab; margin-bottom: 18px;">Contact</div>
+          <a href="{{ mailto }}" class="lance-nav-link" style="display: block; font-size: 15px; color: #d6deec; margin-bottom: 12px;">{{ contactEmail }}</a>
+          <div style="font-size: 15px; color: #d6deec; margin-bottom: 12px;">{{ office }}</div>
+          <div style="font-size: 15px; color: #8ea0bd; line-height: 1.5;">UT San Antonio<br>One UTSA Circle, San Antonio, TX</div>
+        </div>
+        <div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #6f86ab; margin-bottom: 18px;">Explore</div>
+          <a href="#research" class="lance-nav-link" style="display: block; font-size: 15px; color: #d6deec; margin-bottom: 12px;">Research</a>
+          <a href="#people" class="lance-nav-link" style="display: block; font-size: 15px; color: #d6deec; margin-bottom: 12px;">People</a>
+          <a href="#publications" class="lance-nav-link" style="display: block; font-size: 15px; color: #d6deec;">Publications</a>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 28px;">
+        <div style="font-size: 13px; color: #51668a;"></div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;contactEmail&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;william.severa@utsa.edu&quot;},&quot;office&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;NPB 2.204&quot;},&quot;recruiting&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true}}">
+class Component extends DCLogic {
+  heroCanvas = React.createRef();
+
+  renderVals() {
+    const contactEmail = this.props.contactEmail ?? "william.severa@utsa.edu";
+    const office = this.props.office ?? "SP2 340C";
+
+
+    const logo = "images/logob.png";   // light/reversed: it sits on navy
+    const piPhoto = "images/Severa.jpeg";                 
+
+    const members = [
+      { name: "Johannes Bauer", role: "Graduate Researcher", note: "Explainability of neuroscience-inspired architectures.", photo: "images/Bauer.jpeg" },
+      { name: "Oluwapelumi Babalola", role: "Graduate Researcher", note: "Efficient spiking network simulation; spiking approaches to anomaly detection." },
+      { name: "Sazia Rahman", role: "Graduate Researcher", note: "Neuromorphic computing, brain-inspired AI.", photo: "images/Rahman.png" },
+      { name: "Sneha Karki", role: "Graduate Researcher", note:"Data visualization; data science; visualization of spiking neural networks.", photo: "images/Karki.png"},
+    ].map((m) => ({ ...m, noPhoto: !m.photo }));
+
+    return {
+      logo,
+      noLogo: !logo,
+      piPhoto,
+      noPiPhoto: !piPhoto,
+      members,
+      heroCanvas: this.heroCanvas,
+      contactEmail,
+      office,
+      mailto: "mailto:" + contactEmail,
+      recruiting: this.props.recruiting ?? true,
+      areas: [
+        {
+          num: "01",
+          kicker: "Brain-inspired computation",
+          title: "Neuromorphic Computing & Spiking Neural Networks",
+          body1: "Biological brains compute efficiently by using sparse, time-coded events instead of dense arithmetic. We design spiking neural networks and neuromorphic algorithms built on this same principle, aiming for a fraction of the energy conventional deep learning requires.",
+          body2: "The case for this hardware is not only cheaper AI. We build spiking algorithms for problems that look nothing like classification, and we also work in the other direction, using neuromorphic systems as an instrument for neuroscience.",
+          tags: ["Spiking neural networks", "Event-driven computation", "Neuromorphic hardware", "Scientific computing", "Connectome simulation"],
+        },
+        {
+          num: "02",
+          kicker: "Beyond accuracy",
+          title: "Trustworthy & Interpretable AI",
+          body1: "Accuracy alone does not earn trust. A model that is right 95% of the time is only useful if predictions are put into context. We build methods that help explain both the behavior of models as well as the structure of data.",
+          body2: "That work is grounded in remote sensing and AI for science, two domains where labels are scarce, distribution shift is the norm, and interpretability is a requirement rather than a nicety, and increasingly toward medical applications, where the same pressures apply and an unexplained answer costs more.",
+          tags: ["Interpretability and robustness", "High-consequence AI", "Remote sensing", "AI for science", "Health & biomedical"],
+        },
+        {
+          num: "03",
+          kicker: "The deployment constraint",
+          title: "Efficient Machine Learning",
+          body1: "What decides whether a model ships is usually the cost of running it, not the cost of training it. We work on the inference side: compute, memory, and energy, without giving up the accuracy the application actually requires.",
+          body2: "By studying the trade-offs between accuracy, efficiency, and robustness, we build systems that run within the tight constraints of edge devices, embedded sensors, and operational environments.",
+          tags: ["Model efficiency", "Edge deployment", "Compute / accuracy trade-offs", "Scalable systems"],
+        },
+      ],
+      pubs: [
+        {
+          year: "2026",
+          type: "Conference",
+          title: "Memory Trade-Offs in Neuromorphic Communication Strategies of the Flywire Connectome on Loihi 2",
+          authors: "F. Wang, B. H. Theilman, F. Rothganger, C. M. Vineyard, J. B. Aimone, W. Severa",
+          venue: "Neuro-Inspired Computational Elements (NICE 2026)",
+          tags: ["Connectome simulation", "Loihi 2", "Neural data"],
+        },
+        {
+          year: "2026",
+          type: "Journal",
+          title: "The Shape of Data: Topological Data Analysis Methods to Understand SAR Datasets",
+          authors: "J. Bauer, E. H. Gonzalez, W. Severa, C. M. Vineyard",
+          venue: "Data Science in Science 5(1)",
+          tags: ["Topological data analysis", "Remote sensing", "Dataset structure"],
+        },
+        {
+          year: "2026",
+          type: "Conference",
+          title: "Understanding Differential Privacy for ATR Template Generation",
+          authors: "W. Severa, J. Bauer, C. M. Vineyard",
+          venue: "Proc. SPIE 14031, Automatic Target Recognition XXXVI",
+          tags: ["Differential privacy", "Remote sensing", "Operational security"],
+        },
+        {
+          year: "2026",
+          type: "Conference",
+          title: "Work Smarter, Not Harder: Simple Classifiers Can Make Simple Work of Common SAR ATR Datasets",
+          authors: "J. Bauer, E. H. Gonzalez, C. M. Vineyard, W. Severa",
+          venue: "Proc. SPIE 14031, Automatic Target Recognition XXXVI",
+          tags: ["Model efficiency", "Benchmark critique", "Remote sensing"],
+        },
+        {
+          year: "2025",
+          type: "Conference",
+          title: "Benchmarking Spiking Network Partitioning Methods on Loihi 2",
+          authors: "W. Severa, F. Wang, Y. Ho, F. Rothganger, A. Daram, E. Gonzalez",
+          venue: "ACM Great Lakes Symposium on VLSI (GLSVLSI 2025)",
+          tags: ["Spiking neural networks", "Neuromorphic hardware", "Benchmarking"],
+        },
+      ],
+      posters: [
+        {
+          year: "2026", type: "Poster",
+          title: "Robustness Evaluation of Rhythm-SNN Under Various Noise Perturbations",
+          authors: "S. Rahman, W. Severa",
+          venue: "ICONS 2026, Student Poster Competition \u00b7 Chicago, IL",
+          tags: ["Spiking neural networks", "Robustness"],
+        },
+        {
+          year: "2026", type: "Poster",
+          title: "Characterizing Memory Efficiency in Procedurally Generated Spiking Neural Network Simulation",
+          authors: "O. Babalola, W. Severa",
+          venue: "ICONS 2026, Student Poster Competition \u00b7 Chicago, IL",
+          tags: ["Simulation", "Memory efficiency"],
+        },
+        {
+          year: "2026", type: "Poster",
+          title: "Spiking Neural Network Autoencoder Approach for Fraudulent Transaction Detection",
+          authors: "O. Babalola, W. Severa",
+          venue: "ICONS 2026, Student Poster Competition \u00b7 Chicago, IL",
+          tags: ["Autoencoders", "Anomaly detection"],
+        },
+        {
+          year: "2026", type: "Invited talk",
+          title: "Optimization on Neuromorphic Spiking Neural Networks",
+          authors: "W. Severa",
+          venue: "SIAM Conference on Discrete Mathematics (DM26) \u00b7 UC San Diego",
+          tags: ["Discrete mathematics", "Spiking algorithms"],
+        },
+        {
+          year: "2026", type: "Invited talk",
+          title: "Addressing practical challenges of computer vision systems in a high-consequence application",
+          authors: "W. Severa",
+          venue: "NSF AI Spring School \u00b7 MATRIX AI Consortium, UT San Antonio",
+          tags: ["Edge AI", "Neuromorphic computing"],
+        },
+      ],
+      hasPosters: true,
+      noPosters: false,
+      prior: [
+        {
+          year: "2025",
+          type: "Journal",
+          title: "Advantages of Imperfect Dice Rolls over Coin Flips for Random Number Generation",
+          authors: "D. T. Pfeffer, C. R. Allemang, S. Misra, W. Severa, J. D. Smith",
+          venue: "Scientific Reports 15",
+          tags: ["Stochastic devices", "Multi-state RNG", "Probabilistic computing"],
+        },
+        {
+          year: "2023",
+          type: "Journal",
+          title: "Research Challenges for Energy-Efficient Computing in Automated Vehicles",
+          authors: "R. P. Dick, R. Aitken, J. Mogill, and 12 others incl. W. Severa",
+          venue: "Computer 56(3), 47\u201358",
+          tags: ["Automated vehicles", "Energy efficiency", "Edge computing"],
+        },
+        {
+          year: "2022",
+          type: "Journal",
+          title: "Neuromorphic Scaling Advantages for Energy-Efficient Random Walk Computations",
+          authors: "J. D. Smith, A. J. Hill, L. E. Reeder, B. C. Franke, R. B. Lehoucq, O. Parekh, W. Severa, J. B. Aimone",
+          venue: "Nature Electronics 5, 102\u2013112",
+          tags: ["Random walks", "Monte Carlo methods", "Scientific computing"],
+        },
+        {
+          year: "2021",
+          type: "Conference",
+          title: "Provable Advantages for Graph Algorithms in Spiking Neural Networks",
+          authors: "J. B. Aimone, Y. Ho, O. Parekh, C. A. Phillips, A. Pinar, W. Severa, Y. Wang",
+          venue: "ACM Symposium on Parallelism in Algorithms and Architectures (SPAA 2021)",
+          tags: ["Graph algorithms", "Complexity analysis", "Spiking neural networks"],
+        },
+        {
+          year: "2019",
+          type: "Journal",
+          title: "Training Deep Neural Networks for Binary Communication with the Whetstone Method",
+          authors: "W. Severa, C. M. Vineyard, R. Dellana, S. J. Verzi, J. B. Aimone",
+          venue: "Nature Machine Intelligence 1, 86\u201394",
+          tags: ["Spiking neural networks", "Deep learning", "Binary communication"],
+        },
+        {
+          year: "2019",
+          type: "Journal",
+          title: "Making BREAD: Biomimetic Strategies for Artificial Intelligence Now and in the Future",
+          authors: "J. L. Krichmar, W. Severa, M. S. Khan, J. L. Olds",
+          venue: "Frontiers in Neuroscience 13, 666",
+          tags: ["Biomimetic design", "Energy efficiency", "Perspective"],
+        },
+        {
+          year: "2017",
+          type: "Journal",
+          title: "A Combinatorial Model for Dentate Gyrus Sparse Coding",
+          authors: "W. Severa, O. Parekh, C. D. James, J. B. Aimone",
+          venue: "Neural Computation 29(1), 94\u2013117",
+          tags: ["Computational neuroscience", "Sparse coding", "Hippocampus"],
+        },
+        {
+          year: "2016",
+          type: "Conference",
+          title: "Neurogenesis Deep Learning: Extending Deep Networks to Accommodate New Classes",
+          authors: "T. J. Draelos, N. E. Miner, C. C. Lamb, J. A. Cox, C. M. Vineyard, K. D. Carlson, W. M. Severa, C. D. James, J. B. Aimone",
+          venue: "IEEE International Joint Conference on Neural Networks (IJCNN 2016), 526\u2013533",
+          tags: ["Neurogenesis", "Continual learning", "Deep learning"],
+        },
+      ],
+      hasPrior: true,
+      noPrior: false,
+    };
+  }
+
+  componentDidMount() {
+    const canvas = this.heroCanvas.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    const resize = () => {
+      const r = canvas.getBoundingClientRect();
+      canvas.width = Math.max(1, r.width * DPR);
+      canvas.height = Math.max(1, r.height * DPR);
+    };
+    resize();
+    const W = () => canvas.width, H = () => canvas.height;
+    const N = 64;
+    const nodes = [];
+    for (let i = 0; i < N; i++) {
+      nodes.push({
+        x: Math.random() * W(), y: Math.random() * H(),
+        vx: (Math.random() - 0.5) * 0.16 * DPR, vy: (Math.random() - 0.5) * 0.16 * DPR,
+        r: (Math.random() * 1.7 + 1.5) * DPR, ph: Math.random() * Math.PI * 2
+      });
+    }
+    const maxd = 155 * DPR;
+    let raf;
+    const draw = (t) => {
+      ctx.clearRect(0, 0, W(), H());
+      for (let i = 0; i < N; i++) {
+        for (let j = i + 1; j < N; j++) {
+          const a = nodes[i], b = nodes[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const d = Math.hypot(dx, dy);
+          if (d < maxd) {
+            const al = (1 - d / maxd) * 0.5;
+            ctx.strokeStyle = 'rgba(246,150,95,' + al + ')';
+            ctx.lineWidth = 1 * DPR;
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          }
+        }
+      }
+      for (const n of nodes) {
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > W()) n.vx *= -1;
+        if (n.y < 0 || n.y > H()) n.vy *= -1;
+        const pulse = 0.5 + 0.5 * Math.sin(t * 0.0019 + n.ph);
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r * (1.0 + pulse * 0.75), 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,196,150,' + (0.55 + pulse * 0.45) + ')';
+        ctx.shadowColor = 'rgba(241,110,50,0.9)';
+        ctx.shadowBlur = 9 * DPR * pulse;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+      raf = requestAnimationFrame(draw);
+    };
+    raf = requestAnimationFrame(draw);
+    this._onResize = () => resize();
+    window.addEventListener('resize', this._onResize);
+    this._raf = () => cancelAnimationFrame(raf);
+  }
+
+  componentWillUnmount() {
+    if (this._raf) this._raf();
+    if (this._onResize) window.removeEventListener('resize', this._onResize);
+  }
+}
+</script>
+</body>
+</html>\end{align*}
+\end{document}
